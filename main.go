@@ -21,25 +21,9 @@ func main() {
 	greetUsers(conferenceName, conferenceTickets, remainingTickets)
 
 	for remainingTickets > 0 && len(bookings) < 50 {
-		var firstName string
-		var lastName string
-		var email string
-		var userTickets uint
 
-		// fmt.Println(remainingTickets)
-		// fmt.Println(&remainingTickets) pointer is referring the memory address using a hash(Pointer)
-
-		fmt.Println("Please enter your first name: ")
-		fmt.Scan(&firstName)
-
-		fmt.Println("Please enter your last name: ")
-		fmt.Scan(&lastName)
-
-		fmt.Println("Please enter your email: ")
-		fmt.Scan(&email)
-
-		fmt.Println("Enter number of tickets you want to book: ")
-		fmt.Scan(&userTickets)
+		//Call function to take user inputs
+		firstName, lastName, email, userTickets := getUserInput()
 
 		//Call function to validate user inputs
 		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets, remainingTickets)
@@ -118,9 +102,35 @@ func getFirstNames(bookings []string) []string {
 }
 
 func validateUserInput(firstName string, lastName string, email string, userTickets uint, remainingTickets uint) (bool, bool, bool) {
+	
 	isValidName := len(firstName) >= 2 && len(lastName) >= 2
 	isValidEmail := strings.Contains(email, "@")
 	isValidTicketNumber := userTickets > 0 && userTickets < remainingTickets
 
 	return isValidName, isValidEmail, isValidTicketNumber
+}
+
+func getUserInput() (string, string, string, uint){
+
+	var firstName string
+	var lastName string
+	var email string
+	var userTickets uint
+
+	// fmt.Println(remainingTickets)
+	// fmt.Println(&remainingTickets) pointer is referring the memory address using a hash(Pointer)
+
+	fmt.Println("Please enter your first name: ")
+	fmt.Scan(&firstName)
+
+	fmt.Println("Please enter your last name: ")
+	fmt.Scan(&lastName)
+
+	fmt.Println("Please enter your email: ")
+	fmt.Scan(&email)
+
+	fmt.Println("Enter number of tickets you want to book: ")
+	fmt.Scan(&userTickets)
+
+	return firstName, lastName, email, userTickets
 }

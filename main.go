@@ -17,15 +17,8 @@ func main() {
 	var bookings []string //Slice Declaration
 	// var bookings = []string{} //alternative way of declaring slice
 	// bookings := []string{} // Another alternative way of declaring slice
-	
-	greetUsers()
 
-	fmt.Printf("Welcome to our %v booking application\n", conferenceName)
-
-	fmt.Printf("conferenceTickets is %T, remainingTickets is %T, conferenceName is %T\n", conferenceTickets, remainingTickets, conferenceName)
-
-	fmt.Printf("We have total of %v tickets and %v are still available\n", conferenceTickets, remainingTickets)
-	fmt.Println("Get your tickets here to attend")
+	greetUsers(conferenceName, conferenceTickets, remainingTickets)
 
 	for remainingTickets > 0 && len(bookings) < 50 {
 		var firstName string
@@ -130,8 +123,9 @@ func main() {
 
 }
 
+func greetUsers(confName string, confTickets int, remainTickets uint) {
 
-func greetUsers(){
-
-	fmt.Println("Welcome to our Conference")
+	fmt.Printf("Welcome to %v booking application\n", confName)
+	fmt.Printf("We have total of %v tickets and %v are still available\n", confTickets, remainTickets)
+	fmt.Println("Get your tickets here to attend")
 }

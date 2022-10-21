@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	// var conferenceName string = "Go Conference"
@@ -14,8 +17,6 @@ func main() {
 	var bookings []string //Slice Declaration
 	// var bookings = []string{} //alternative way of declaring slice
 	// bookings := []string{} // Another alternative way of declaring slice
-
-
 
 	fmt.Printf("Welcome to our %v booking application\n", conferenceName)
 
@@ -56,6 +57,23 @@ func main() {
 		fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
-		fmt.Printf("These are all our bookings: %v\n",bookings)
+		firstNames := []string{} //another way of declaring-- var firstNames []string
+		for _, booking := range bookings {
+			var names = strings.Fields(booking)
+			firstNames = append(firstNames, names[0])
+		}
+
+		fmt.Printf("The first names of bookings are: %v\n", firstNames)
+
+
+		// books := []string{"Maria Zaman","Hermione Ginger","Afrose Meghla"}
+
+		// bookFirstNames := []string{}
+		// for _, book := range(books){
+		// 	var bookNames = strings.Fields(book)
+		// 	bookFirstNames = append(bookFirstNames, bookNames[0])
+		// }
+
+		// fmt.Printf("Book First Names are: %v\n", bookFirstNames)
 	}
 }

@@ -17,6 +17,8 @@ func main() {
 	var bookings []string //Slice Declaration
 	// var bookings = []string{} //alternative way of declaring slice
 	// bookings := []string{} // Another alternative way of declaring slice
+	
+	greetUsers()
 
 	fmt.Printf("Welcome to our %v booking application\n", conferenceName)
 
@@ -126,26 +128,10 @@ func main() {
 
 	}
 
-	// Switch Case Statement
+}
 
-	city := "London"
 
-	switch city {
+func greetUsers(){
 
-	case "New York":
-		//Execute code for booking New York conference tickets
-
-	case "Singapore", "Hong Kong":
-		//Execute code for booking Singapore and Hong Kong conference tickets
-
-	case "London", "Berlin":
-		//Execute code for booking London and Berlin conference tickets
-
-	case "Mexico City":
-		//Execute code for booking Mexico City conference tickets
-
-	default:
-		//execute when none of the above is true
-		fmt.Println("No valid city is selected")
-	}
+	fmt.Println("Welcome to our Conference")
 }

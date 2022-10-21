@@ -41,13 +41,9 @@ func main() {
 		fmt.Println("Enter number of tickets you want to book: ")
 		fmt.Scan(&userTickets)
 
-		isValidName := len(firstName) >= 2 && len(lastName) >= 2
-		isValidEmail := strings.Contains(email, "@")
-		isValidTicketNumber := userTickets > 0 && userTickets < remainingTickets
+		//Call function to validate user inputs
+		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
-		// isValidCity := city == "Singapore" || city == "London"
-		// isInValidCity := city != "Singapore" || city != "London"
-		// !isValidCity := city == "Singapore" || city == "London"
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 
@@ -63,27 +59,8 @@ func main() {
 			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
 			//Call function to print the first names
-			printFirstNames(bookings)
-
-			// books := []string{"Maria Zaman","Hermione Ginger","Afrose Meghla"}
-
-			// bookFirstNames := []string{}
-			// for _, book := range(books){
-			// 	var bookNames = strings.Fields(book)
-			// 	bookFirstNames = append(bookFirstNames, bookNames[0])
-			// }
-
-			// fmt.Printf("Book First Names are: %v\n", bookFirstNames)
-
-			// var noTicketsRemaining bool = remainingTickets == 0
-			// // noTicketsRemaining := remainingTickets == 0 //another way of the declaration
-			// if noTicketsRemaining {
-			// 	fmt.Println("Our conference is booked out. Come back next year")
-			// 	break
-			// }
-
-			//Since we are using this variable "noTicketsRemaining" only once
-			//there's actually no need to save this expression in a separate variable
+			firstNames := getFirstNames(bookings)
+			fmt.Printf("The first names of bookings are: %v\n", firstNames)
 
 			if remainingTickets == 0 {
 				fmt.Println("Our conference is booked out. Come back next year")
@@ -125,13 +102,25 @@ func greetUsers(confName string, confTickets int, remainTickets uint) {
 	fmt.Println("Get your tickets here to attend")
 }
 
-func printFirstNames(bookings []string){
+//Passing parameter section inside the brackets is input parameter and outside the
+//brackets is the output parameter
+
+func getFirstNames(bookings []string) []string {
 	firstNames := []string{} //another way of declaring-- var firstNames []string
-	
+
 	for _, booking := range bookings {
 		var names = strings.Fields(booking)
 		firstNames = append(firstNames, names[0])
 	}
-	fmt.Printf("The first names of bookings are: %v\n", firstNames)
 
+	return firstNames
+
+}
+
+func validateUserInput(firstName string, lastName string, email string, userTickets uint, remainingTickets uint) (bool, bool, bool) {
+	isValidName := len(firstName) >= 2 && len(lastName) >= 2
+	isValidEmail := strings.Contains(email, "@")
+	isValidTicketNumber := userTickets > 0 && userTickets < remainingTickets
+
+	return isValidName, isValidEmail, isValidTicketNumber
 }

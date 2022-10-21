@@ -46,6 +46,11 @@ func main() {
 		fmt.Println("Enter number of tickets you want to book: ")
 		fmt.Scan(&userTickets)
 
+		if userTickets > remainingTickets {
+			fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
+			break
+		}
+
 		remainingTickets = remainingTickets - userTickets
 		bookings = append(bookings, firstName+" "+lastName)
 
@@ -65,7 +70,6 @@ func main() {
 
 		fmt.Printf("The first names of bookings are: %v\n", firstNames)
 
-
 		// books := []string{"Maria Zaman","Hermione Ginger","Afrose Meghla"}
 
 		// bookFirstNames := []string{}
@@ -75,5 +79,20 @@ func main() {
 		// }
 
 		// fmt.Printf("Book First Names are: %v\n", bookFirstNames)
+
+		// var noTicketsRemaining bool = remainingTickets == 0
+		// // noTicketsRemaining := remainingTickets == 0 //another way of the declaration
+		// if noTicketsRemaining {
+		// 	fmt.Println("Our conference is booked out. Come back next year")
+		// 	break
+		// }
+
+		//Since we are using this variable "noTicketsRemaining" only once
+		//there's actually no need to save this expression in a separate variable
+
+		if remainingTickets == 0 {
+			fmt.Println("Our conference is booked out. Come back next year")
+			break
+		}
 	}
 }

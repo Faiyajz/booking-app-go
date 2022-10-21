@@ -46,53 +46,55 @@ func main() {
 		fmt.Println("Enter number of tickets you want to book: ")
 		fmt.Scan(&userTickets)
 
-		if userTickets > remainingTickets {
+		if userTickets <= remainingTickets {
+
+			remainingTickets = remainingTickets - userTickets
+			bookings = append(bookings, firstName+" "+lastName)
+
+			fmt.Printf("The whole slice: %v\n", bookings)
+			fmt.Printf("The first value: %v\n", bookings[0])
+			fmt.Printf("Slice type: %T\n", bookings)
+			fmt.Printf("Slice Size: %v\n", len(bookings))
+
+			fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
+			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+
+			firstNames := []string{} //another way of declaring-- var firstNames []string
+			for _, booking := range bookings {
+				var names = strings.Fields(booking)
+				firstNames = append(firstNames, names[0])
+			}
+
+			fmt.Printf("The first names of bookings are: %v\n", firstNames)
+
+			// books := []string{"Maria Zaman","Hermione Ginger","Afrose Meghla"}
+
+			// bookFirstNames := []string{}
+			// for _, book := range(books){
+			// 	var bookNames = strings.Fields(book)
+			// 	bookFirstNames = append(bookFirstNames, bookNames[0])
+			// }
+
+			// fmt.Printf("Book First Names are: %v\n", bookFirstNames)
+
+			// var noTicketsRemaining bool = remainingTickets == 0
+			// // noTicketsRemaining := remainingTickets == 0 //another way of the declaration
+			// if noTicketsRemaining {
+			// 	fmt.Println("Our conference is booked out. Come back next year")
+			// 	break
+			// }
+
+			//Since we are using this variable "noTicketsRemaining" only once
+			//there's actually no need to save this expression in a separate variable
+
+			if remainingTickets == 0 {
+				fmt.Println("Our conference is booked out. Come back next year")
+				break
+			}
+		} else {
+
 			fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
-			continue
 		}
 
-		remainingTickets = remainingTickets - userTickets
-		bookings = append(bookings, firstName+" "+lastName)
-
-		fmt.Printf("The whole slice: %v\n", bookings)
-		fmt.Printf("The first value: %v\n", bookings[0])
-		fmt.Printf("Slice type: %T\n", bookings)
-		fmt.Printf("Slice Size: %v\n", len(bookings))
-
-		fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
-		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
-
-		firstNames := []string{} //another way of declaring-- var firstNames []string
-		for _, booking := range bookings {
-			var names = strings.Fields(booking)
-			firstNames = append(firstNames, names[0])
-		}
-
-		fmt.Printf("The first names of bookings are: %v\n", firstNames)
-
-		// books := []string{"Maria Zaman","Hermione Ginger","Afrose Meghla"}
-
-		// bookFirstNames := []string{}
-		// for _, book := range(books){
-		// 	var bookNames = strings.Fields(book)
-		// 	bookFirstNames = append(bookFirstNames, bookNames[0])
-		// }
-
-		// fmt.Printf("Book First Names are: %v\n", bookFirstNames)
-
-		// var noTicketsRemaining bool = remainingTickets == 0
-		// // noTicketsRemaining := remainingTickets == 0 //another way of the declaration
-		// if noTicketsRemaining {
-		// 	fmt.Println("Our conference is booked out. Come back next year")
-		// 	break
-		// }
-
-		//Since we are using this variable "noTicketsRemaining" only once
-		//there's actually no need to save this expression in a separate variable
-
-		if remainingTickets == 0 {
-			fmt.Println("Our conference is booked out. Come back next year")
-			break
-		}
 	}
 }

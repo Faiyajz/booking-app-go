@@ -107,7 +107,21 @@ func main() {
 
 		} else {
 
-			fmt.Println("Your Input data is invalid")
+			if !isValidName {
+
+				fmt.Println("First name or Last name you entered is invalid")
+			}
+
+			if !isValidEmail {
+
+				fmt.Println("Email address you entered is invalid")
+			}
+
+			if !isValidTicketNumber {
+
+				fmt.Println("Number of tickets you entered is invalid")
+			}
+
 		}
 
 	}

@@ -44,7 +44,7 @@ func main() {
 
 			bookTicket(firstName, lastName, userTickets, email)
 
-			sendTicket(userTickets, firstName, lastName, email)
+			go sendTicket(userTickets, firstName, lastName, email)
 
 			firstNames := getFirstNames()
 			fmt.Printf("The first names of bookings are: %v\n", firstNames)

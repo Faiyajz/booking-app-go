@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"strings"
 	"booking-app/helper"
+	"fmt"
+	"strconv"
 )
 
 var conferenceName = "Go Conference"
@@ -11,7 +11,33 @@ var conferenceName = "Go Conference"
 const conferenceTickets = 50
 
 var remainingTickets uint = 50
-var bookings = []string{}
+var bookings = make([]map[string]string, 0) //empty list of map
+
+// Instead of this kind of value "Faiyaj Zaman"
+
+// we want this kind of data block for each user
+// firstName: "Faiyaj"
+// lastName: "Zaman"
+// email: "faiyajz007@gmail.com"
+// tickets: 3
+
+//we havea to define a map for the above situation
+// map is a collection of key-value pairs
+//create a map for a user
+// var userData = map[string]string
+
+// first of all, create a variable of an empty map with a keyword map
+// then the data type of the key and data type of the value respectively
+
+//To create an empty map we have a built in function called "make"
+// var userData = make(map[string]string)
+// All keys have the same data type
+// All values have the same data type
+//if the values have different data type we will have to convert it
+// if the values have string and int mixed data types
+// we will have to convert the int to string
+// strconv.FormatUint(uint64(userTickets))
+//userData["firstName"] = firstName // also be declared as like this userData["a"] = firstName, key can be any name
 
 func main() {
 
@@ -75,8 +101,8 @@ func getFirstNames() []string {
 	firstNames := []string{}
 
 	for _, booking := range bookings {
-		var names = strings.Fields(booking)
-		firstNames = append(firstNames, names[0])
+
+		firstNames = append(firstNames, booking["firstName"])
 	}
 
 	return firstNames
@@ -108,7 +134,15 @@ func getUserInput() (string, string, string, uint) {
 func bookTicket(firstName string, lastName string, userTickets uint, email string) {
 
 	remainingTickets = remainingTickets - userTickets
-	bookings = append(bookings, firstName+" "+lastName)
+
+	var userData = make(map[string]string)
+	userData["firstName"] = firstName // also be declared as like this userData["a"] = firstName, key can be any name
+	userData["lastName"] = lastName
+	userData["email"] = email
+	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
+
+	bookings = append(bookings, userData)
+	fmt.Printf("List of bookings is %v\n", bookings)
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)

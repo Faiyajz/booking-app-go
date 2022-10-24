@@ -2,6 +2,8 @@ package helper
 
 import "strings"
 
+var MyVar = "somevalue" // Global variable has to be declared starting with capital letter
+
 func ValidateUserInput(firstName string, lastName string, email string, userTickets uint, remainingTickets uint) (bool, bool, bool) {
 
 	isValidName := len(firstName) >= 2 && len(lastName) >= 2

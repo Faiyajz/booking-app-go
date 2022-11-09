@@ -3,6 +3,7 @@ package main
 import (
 	"booking-app/helper"
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -20,65 +21,55 @@ type UserData struct {
 	numberOfTickets uint
 }
 
-//how can we save mixed data types of an entities
-//we can use Struct which stands for "Structure" that can hold mixed data types
-
-// type UserData struct {
-// firstName string
-// lastName string
-// email string
-// numberOfTickets uint
-// }
+var waitgroup = sync.WaitGroup{}
 
 func main() {
 
 	greetUsers()
 
-	for {
+	firstName, lastName, email, userTickets := getUserInput()
 
-		firstName, lastName, email, userTickets := getUserInput()
+	isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
-		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
+	if isValidName && isValidEmail && isValidTicketNumber {
 
-		if isValidName && isValidEmail && isValidTicketNumber {
+		bookTicket(firstName, lastName, userTickets, email)
 
-			bookTicket(firstName, lastName, userTickets, email)
+		waitgroup.Add(1)
+		go sendTicket(userTickets, firstName, lastName, email)
 
-			go sendTicket(userTickets, firstName, lastName, email)
+		firstNames := getFirstNames()
+		fmt.Printf("The first names of bookings are: %v\n", firstNames)
 
-			firstNames := getFirstNames()
-			fmt.Printf("The first names of bookings are: %v\n", firstNames)
+		if remainingTickets == 0 {
+			fmt.Println("Our conference is booked out. Come back next year")
+			// break
+		}
+	} else if userTickets == remainingTickets {
 
-			if remainingTickets == 0 {
-				fmt.Println("Our conference is booked out. Come back next year")
-				break
-			}
-		} else if userTickets == remainingTickets {
+		fmt.Printf("You have bought all the tickets. Thank you\n")
+		fmt.Printf("All the tickets sold out. Please come back later\n")
+		// break
 
-			fmt.Printf("You have bought all the tickets. Thank you\n")
-			fmt.Printf("All the tickets sold out. Please come back later\n")
-			break
+	} else {
 
-		} else {
+		if !isValidName {
 
-			if !isValidName {
+			fmt.Println("First name or Last name you entered is invalid")
+		}
 
-				fmt.Println("First name or Last name you entered is invalid")
-			}
+		if !isValidEmail {
 
-			if !isValidEmail {
+			fmt.Println("Email address you entered is invalid")
+		}
 
-				fmt.Println("Email address you entered is invalid")
-			}
+		if !isValidTicketNumber {
 
-			if !isValidTicketNumber {
-
-				fmt.Println("Number of tickets you entered is invalid")
-			}
-
+			fmt.Println("Number of tickets you entered is invalid")
 		}
 
 	}
+	waitgroup.Wait()
 
 }
 
@@ -152,4 +143,5 @@ func sendTicket(userTickets uint, firstName string, lastName string, email strin
 	fmt.Printf("Sending %v tickets to email address %v\n", ticket, email)
 	fmt.Println("################################")
 
+	waitgroup.Done()
 }
